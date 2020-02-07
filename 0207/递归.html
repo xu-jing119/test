@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>递归</title>
+  </head>
+  <body>
+    <script>
+      // 递归就是 函数自己调用自己
+      // 斐波那契数列  1 1 2 3 5 8 13 21 34 55 ....
+      // 我们想写一个函数，求任意位数上的 值
+      function fn(param) {
+        // 如果不添加结束条件就会产生死循环
+        if (param == 1 || param == 2) {
+          return 1;
+        }
+        return fn(param - 1) + fn(param - 2);
+      }
+
+      console.log(fn(9));
+
+      // 在工作里面递归用在哪里呢？
+      // 主要针对的是我们的 比较复杂的对象数组结构
+      // 常见的一个案例，就是我们在页面里面经常使用的  树形结构
+      var list = [
+        {
+          id: 1,
+          children: [
+            {
+              age: 12,
+              name: "zs",
+              children: [
+                {
+                  addr: "aa",
+                  sex: "male"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 1,
+          children: [
+            { age: 12, name: "zs" },
+            { age: 12, name: "zs" }
+          ]
+        },
+        {
+          id: 1,
+          children: [
+            { age: 12, name: "zs" },
+            { age: 12, name: "zs" }
+          ]
+        }
+      ];
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 闭包  内部函数访问了外部函数的变量  就形成了闭包
+      // 闭包的特点 可以保持变量
+
+      function fn() {
+        var num = 1;
+        return function fn1() {
+          num++;
+          console.log(num);
+        };
+      }
+
+      // 这里已经调用了fn， 但是fn的返回值是一个函数
+      // 所以说 v1就是一个匿名函数
+      var v1 = fn();
+      // 现在我们想看一， 闭包到底是谁， 通过我们浏览器的debugger看 clousure
+      // 在27行这里， 点击浏览器左边的行数， 相当于打个断点
+      // 看source栏目 右边的 scope（作用域）
+      // 开始作用域只用全局作用于 Global
+      // 调试模式下， 按下一步， 就会进入 fn1的函数内部， scope马上就会产生两个作用域
+      // 一个是当前fn1函数作用域，或者叫局部作用域  名称叫Local，  会发现this这个变量也是在函数调用的一瞬间产生的一个对象， 谁调用我这个函数，我的this就指向谁， v1() 调用 就相当于 window.v1() 所以 v1函数里面的this=== Window
+      // scope还有一个作用域， 就是闭包  closure； 在我们的调试器里面  闭包就是函数fn不是fn1
+      // 这个时候共有三个作用域  全局Global 局部Local  闭包Closure
+      v1();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>传统方式动态创建表格</title>
+    <style>
+        a{
+            color:red;
+            text-decoration:underline
+        }
+        a:hover{
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <table cellspacing="0" border="1" width="300px">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>技能</th>
+            <th>分数</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    var list = [
+        {
+            name:"徐静",
+            age:18,
+            score:99
+        },
+        {
+            name:"夏雷",
+            age:28,
+            score:60
+        },
+        {
+            name:"夏温言",
+            age:1.5,
+            score:100
+        }
+    ]
+    var tbody = document.querySelector("tbody")
+    console.log(tbody);
+    list.forEach(item=>{
+        var tr = document.createElement("tr")
+        tbody.appendChild(tr)
+        for(var key in item){
+            var td = document.createElement("td")
+            tr.appendChild(td)
+            td.innerHTML=item[key]
+        }
+        var td = document.createElement("td")
+    tr.appendChild(td)
+    td.innerHTML="<a>删除</a>"
+    })
+   var as = document.querySelectorAll("a")
+//   console.log(as);
+as.forEach(item=>{
+    item.addEventListener("click",function(){
+        tbody.removeChild(this.parentNode.parentNode)
+    })
+})
+</script>
+</body>
+</html>

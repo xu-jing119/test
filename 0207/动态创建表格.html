@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>传统的数据驱动视图</title>
+    <style>
+      table {
+        width: 500px;
+        margin: 100px auto;
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      td,
+      th {
+        border: 1px solid #333;
+      }
+
+      thead tr {
+        height: 40px;
+        background-color: #ccc;
+      }
+
+      a {
+        text-decoration: underline;
+        color: brown;
+      }
+      a:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table cellspacing="0">
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>科目</th>
+          <th>成绩</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      // 我们这里涉及到的知识点是 webApi的，  动态创建，查找，删除元素（这里可以看做页面的html结构）
+      // DOM对象  var obj = {}
+      // 我们现在想的是 由这些数据，动态创建 tr td
+      // 让后将persons里面的 对象依次放到我们的页面里面去
+      var persons = [
+        {
+          name: "宋江",
+          subject: "演讲",
+          score: 100
+        },
+        {
+          name: "林冲",
+          subject: "武术",
+          score: 98
+        },
+        {
+          name: "阮小二",
+          subject: "游泳",
+          score: 99
+        },
+        {
+          name: "西门庆",
+          subject: "有钱",
+          score: 99
+        },
+        {
+          name: "潘金莲",
+          subject: "漂亮",
+          score: 100
+        }
+      ];
+
+      // 现在要给tbody里面 添加我们自己创建的tr元素， 所以我们必须要先获取tbody这个元素
+      var tbody = document.querySelector("tbody");
+      // console.dir(tbody);
+      // 我为什么要打印这个 tbody对象的格式， 这个主要是为了后面我们学习vue的一个概念--- 虚拟DOM, 做铺垫；  我们的react也是虚拟DOM树， vue是模仿react
+      // 我们浏览器里面默认的对象， 比如tbody 有257个属性， 有很多个属性，对于我们写vue的双向数据绑定是没什么用的， 所以我们程序大神，就发明一种虚拟DOM，（比如说这里面只有几个关键的20个属性，和我们的双向数据绑定相关）  在进行DOM  diff 比对的时候， 提高了效率
+      // var count = 0;
+      // for (var key in tbody) {
+      //   count++;
+      //   console.log(key);
+      // }
+      // console.log(count);
+
+      persons.forEach(item => {
+        var tr = document.createElement("tr");
+        tbody.appendChild(tr);
+
+        for (var key in item) {
+          var td = document.createElement("td");
+          td.innerHTML = item[key];
+          // 下面添加元素的时候，是往我们的tr里面添加，不是tbody
+          tr.appendChild(td);
+        }
+
+        var td = document.createElement("td");
+        td.innerHTML = "<a>删除</a>";
+        tr.appendChild(td);
+      });
+
+      // 给a元素绑定事件，一定要在循环的外面，因为我们的html结构是动态创建的，
+      // 循环不结束，a元素根本就没有
+      var as = document.querySelectorAll("a");
+      console.log(as);
+      as.forEach(item => {
+        item.addEventListener("click", function() {
+          // 现在我们想做的事情就是 怎么样通过当前这点击的a元素，获取到a元素的爷爷
+          // 之前我们了解过一个方法， 可以获取当前元素的父元素 parentNode
+
+          console.log(this.parentNode.parentNode);
+          tbody.removeChild(this.parentNode.parentNode);
+        });
+      });
+
+      // 这个案例主要是联系我们的 动态创建元素，并且给动态创建的元素绑定事件
+    </script>
+  </body>
+</html>
