@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr = ['a','b','c','d','e']
+        // 遍历数组
+        arr.forEach(function(item,i,param){
+            console.log(item,i,param);
+        })
+
+
+
+    var arr1 = ['徐静','七七','雷娃儿']
+    // 可以用来遍历数组
+        arr1.map(function(item){
+            console.log(item);
+            
+        })
+        // 也可以改变原数组里面元素的值 返回一个新数组
+        var newArr = arr1.map(function(item){
+            return '爱'+item
+        })
+        console.log(newArr);
+
+
+        var arr2 = [1,2,3,4]
+        // 可以遍历数组
+        arr2.filter(function(item){
+            console.log(item); 
+        })
+        //过滤数组 返回一个新数组
+        var newArr1 = arr2.filter(function(item){
+            return item>=3
+        })
+
+    console.log(newArr1);
+    
+    </script>
+</body>
+</html>

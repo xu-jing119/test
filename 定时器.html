@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //会循环五次 生成5个定时器 等同步任务执行完 再去执行异步任务定时器 这时候 i已经变成了5,所以会打印出55555
+        for(var i=0; i<5;i++){
+            setTimeout(function(){
+                console.log(i);//55555  
+            })
+        }
+        //let有块级作用域效果,或保存块级变量
+        for(let i=0; i<5;i++){
+            setTimeout(function(){
+                console.log(i);//01234
+            })
+        }
+        //立即执行函数有闭包效果
+        for(var i=0; i<5;i++){
+           (function(i){
+            setTimeout(function(){
+                console.log(i);//01234
+            })
+           })(i)
+        }
+    
+    var nowDate = +new Date()
+    var d = +new Date('2021-2-6 20:00:00')
+    console.log(nowDate);
+    console.log(d);
+    var t = (d-nowDate)/1000
+    console.log(t);
+    var y = parseInt(t/60/60/24)
+    console.log(y);
+    
+    
+    
+    
+    
+    </script>
+</body>
+</html>

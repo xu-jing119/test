@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = 10
+        var m = a++
+        console.log(a,m);//11,10
+
+        var b = 10
+        var n = ++b
+        console.log(b,n);//11,11
+    
+        var e = 10
+        // var p = e++ + ++e + e // 10+12+12
+        var p = ++e + e++ + e // 11+11+12
+        console.log(e,p); // 12,34
+        
+    
+    
+    </script>
+</body>
+</html>

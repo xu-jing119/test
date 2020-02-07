@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //  var t = new Date()
+    //  console.log(t);
+     function dateformat(t){
+        var y = t.getFullYear()
+        var m = (t.getMonth()+1+'').padStart(2,'0')
+        var d = (t.getDate()+'').padStart(2,'0')
+        var h = (t.getHours()+'').padStart(2,'0')
+        var f = (t.getMinutes()+'').padStart(2,'0')
+        var s = (t.getSeconds()+'').padStart(2,'0')
+        var result = `${y}年${m}月${d}日 ${h}:${f}:${s}`
+    return result
+     }
+    
+     console.log(dateformat(new Date())) 
+     console.log(dateformat(new Date('1991-11-9 9:9:9')))
+    </script>
+   
+</body>
+</html>

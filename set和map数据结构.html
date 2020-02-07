@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var set = new Set()
+        //set的add方法相当于数组里面的push     size 相当于数组里面的length
+        //set里面的元素有唯一性  不能有重复的
+        set.add(1)
+        set.add(1)
+        set.add(1)
+        set.add(2)
+        console.log(set);
+        console.log(set.size);
+        //可以将伪数组通过结构的方式转变成真数组
+        console.log([...set]);
+        //常见的场景   数组去重
+        var arr = [1,1,1,22,3,5,1,6,6,2,3,5]
+        var s = new Set(arr)
+        console.log([...s]);
+        
+        //map作用:传统对象键值对的键值只能是字符串   但是map 中的键值可以是任意类型  set方法表示设置键值对  get方法表示获取  keys可以获取所有键的值  values可以获取所有值的值
+        var obj = {
+            name:"徐静",
+            age:18
+        }
+        var map = new Map()
+        map.set(11,[1,2,3])
+        map.set(obj,{gender:"nv"})
+        map.set('a','b')
+        map.set(1,20)
+        console.log(map);
+        console.log(map.get(obj));
+        console.log(map.keys());
+        console.log(map.values());
+        for(var key of map.keys()){
+            console.log(key); 
+        }
+        for(var val of map.values()){
+            console.log(val); 
+        }
+      
+        
+
+
+    
+    
+    
+    
+    </script>
+</body>
+</html>

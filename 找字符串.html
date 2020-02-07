@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //找出出现次数最多的字符以及出现的次数
+        var str ='wwwweerfhug22eeeeeeeegugu1111dgugub121245555'
+        // 首先将字符串变成对象 元素是属性  每个元素的次数是对象的属性值
+        var obj = {}
+        for(var i = 0; i<str.length;i++){
+            // console.log(str[i])
+            if(obj[str[i]]){
+                obj[str[i]]++
+            }else{
+                obj[str[i]]=1
+            }
+        }
+        console.log(obj);
+        // 遍历对象 找出出现次数最多的那个
+        var max = 0
+        var val =''
+        for(var k in obj){
+            if(obj[k]>max){
+                max = obj[k]
+                val = k
+            }
+        }
+        console.log("出现次数最多的是"+val,"出现的次数是"+max);
+        
+        
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>值传递和址传递</title>
+  </head>
+  <body>
+    <script>
+      // 核心点
+      // https://blog.csdn.net/magic_xiang/article/details/83686224
+      // [].toString() = ''
+      // {}.toString() = "[object Object]"
+
+      // [] == ![]   [] !== []
+      //  分析  []  == ![]  先算右边的   一元运算符！优先级最高，所以先算
+      //  第一步之后就是  [] == false    true=1  false =0
+      //  上面一般又可以装换为  [] == 0
+      //  数组或者对象， 在和数字比较的 时候， 会使用 valueOf() 或者 toString() 方法先转换
+      //  现在这一步就是  '' == 0  现在这种情况有个规则就是 会将字符串转换为数字再进行比较, 转换的时候 只能用Number来转， 不能有parseInt
+      // Number（''） == 0
+      // 0 == 0
+
+      // {} == !{}  {} !== {}
+      // !{} === false
+      //  {} == false   true =1  false = 0
+      // {} == 0
+      // "[object Object]" == 0
+      // Number("[object Object]")   NaN
+      //  NaN == 0
+      // 值传递和址传递
+      //  ==  只比较值   === 既比较值， 又比较类型
+      console.log(null == undefined); // 值都是空值，所以相等
+      console.log(null === undefined); //Null  Undefined
+
+      var obj1 = {};
+      var obj2 = {};
+      // 对于复杂数据类型来说， 比较的值 是地址的意思，
+      // 创建的两个空对象，他们的地址不一样， 这里就有两个地址  ox000
+      // 普通数据类型，创建的时候， 值，地址 储存在栈里面，
+      // 复杂数据类型， 创建的时候， 地址储存在栈里面， 值储存在堆里面，
+      console.log(obj1 == obj2);
+      console.log(obj1 === obj2);
+
+      // 普通数据类型，是 值传递
+      var num = 1;
+      function fn(param) {
+        // 函数的形参，就类似于一个变量，只不过没有var，是在函数调用的时候，创建的一个活动参数，仅仅属于函数内部，函数一执行完毕，我们这个函数内部的变量就会销毁
+        param += 1;
+        // num++;  // 这里如果写num， 在函数内部找不到这个变量，就会去全局环境找，如果还找不到就是undefined， 如果找到了，就用对应全局变量下的变量
+        console.log(param);
+      }
+      fn(num); // 是把num的值 1 传递进去， 改变的是我们的形参param， 并没有改变num
+      console.log(num);
+
+      function fn1() {
+        var v2;
+        var v1 = 10;
+        console.log(v2);
+        function fn2() {
+          var v2 = 20;
+          console.log(v1);
+        }
+        console.log(v1);
+        fn2();
+      }
+      fn1(); // undefined 10 10
+      // fn2();  在这里调用fn2是没有定义， 因为我们的函数体定义在函数fn1的内部， 外面看不见； 内部的看见外面的，但是外面的看不见里面的
+      // undefined 出现的时机是  变量声明了 但是没有赋值， 上面这个不报错
+      //  not defiend  表示根本看不见这个变量，会报错
+
+      // 对于复杂数据类型当做参数传递的时候， 是址传递
+      var obj = {
+        age: 12
+      };
+      function getAge(param) {
+        param.age = 15;
+        console.log(param);
+      }
+      getAge(obj);
+      console.log(obj);
+
+      // '22' < '3' 这个是字符串的比较， 我们使用的ascii值，来进行比较
+      // 回车 13   a =97  A = 65  0=48
+      // https://tool.oschina.net/commons
+
+      //  js数值和字符串比较的规则   1 > 'a' 1< 'a' 1 =='a'  本质上都是 1和NaN进行比较，都是假
+      // 1.数值和字符串比较时
+
+      // a.若字符串为数字字符串，则将字符串转为数字，再比较
+
+      // b.若字符串不为数字字符串，则直接返回false，因为这里把字符串转为了NaN, 数字与NaN比较，都返回false
+
+      // 两个字符串比较的规则  就是 ascii值
+      // [] == ![]
+      // {} == !{}
+      // NaN不能比较， 人任何东西比较的时候都是假，因为它是非数字  NaN == NaN 也是假
+    </script>
+  </body>
+</html>

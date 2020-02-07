@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj = {
+            name:"徐静",
+            age:18,
+            gender:"女",
+            address:"湖北孝感"
+        }
+    console.log(Object.keys(obj))
+    console.log(Object.values(obj))
+    // for...of 与 for...in 的区别
+    //for...in 是es5的方法 能够遍历对象和数组,遍历的是key(属性)    for...of 是es6的方法 只能遍历有iterable(迭代)结构的数据  遍历的是value  例如数组,字符串,Set等
+    for(var key in obj){
+        console.log(key)
+    }
+    for(var k of Object.values(obj)){
+        console.log(k);   
+    }
+//for计数器循环 for...of   for...in可以使用一些关键词  break,continue等  forEach不行会报错
+var arr = [11,22,33,44,55,66]
+for(var key of arr){
+    if(key==33){
+        break
+    }
+    console.log(key);
+    
+}
+var obj1 = {
+            name:"徐静",
+            age:18,
+            gender:"女",
+            address:"湖北孝感"
+        }
+for(var k in obj1){
+    if(k==="age"){
+        break
+    }
+    console.log(k);
+    
+}
+
+    
+    
+    
+    </script>
+</body>
+</html>
