@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>对象与类， es5 es6</title>
+  </head>
+  <body>
+    <script>
+      // 构造函数， 类，实例对象，super，extends
+
+      // 再以前的时候 js是一门面向函数的编程语言，没有类，
+      // 类一般是 面向对象语言 c++ java等 最重要的一种数据结构
+      // 在js里面 类的本质就是函数，类也可以叫做我们函数的语法糖
+
+      // 通过我们以前学习的知识点， 怎么样创建一个对象
+      var obj1 = {}; // 字面量的形式创建对象
+      var obj2 = new Object(); // 这个是利用了构造函数的模式
+
+      // 我们这里使用 构造函数 来创建多个同类型的对象
+      // var ldh = {name: '刘德华', age: 40};
+      // var zxy = {name: '张学友', age: 41};
+      var that = null;
+      function Star(name, age) {
+        // 在我们的构造函数里面， 当我们使用了new关键字调用函数以后，
+        // 函数里面的this，就等于我们new处理的实例对象
+        this.name = name;
+        this.age = age;
+        // 所以上面两句话 对于我们的33行来说，就相当于 ldh.name = name; ldh.age=age
+        that = this;
+      }
+      // 一般是在构造函数的原型对象上面绑定 公共的方法， 来实现所有的对象都可以继承
+      Star.prototype.sing = function() {
+        console.log("这个是唱歌的方法");
+      };
+      // 构造函数的调用， 一般是使用new关键字来调用
+      // new关键调用构造函数以后， 返回的这个对象实例 就是我们构造函数 内部的this值
+      var ldh = new Star("刘德华", 40);
+      var zxy = new Star("张学友", 41);
+      console.log(ldh, zxy);
+      console.log(ldh.sing(), zxy.sing());
+      // 在我们事件工作里面的应用是， 例如王者荣耀里面有 100个英雄
+      // 每个人物都可以移动，都要穿各种衣服，还有各种武器
+      // 它们开发人员就会创建一个 英雄对象，里面有所有英雄公用的属性和方法
+      // var hero = { move: function(){}, yifu: 'xxx', wuqi: 'xx'}
+
+      // 在面向对象语言里面，只不过没有面向函数这么麻烦，就通过了类来代替我们的构造函数，贴近于面向对象的开发理念；   封装-继承-多态
+
+      // es6新增的class 来创建对象，更方便；它的本质就是函数
+      // 向学习es6的同学，推荐阮一峰文档
+      class Person {
+        // 在我们的es7里面， 我们写各种属性的属性，就不需要写this了，直接写属性
+        // private addr = "北京";
+        // public addr = "xx";
+        // protected addr = "xxx";
+        //  addr:string;  这个是在ts 在以后写vue的一个方向
+        // es6的constructor就相当于我们 以前的构造函数
+        constructor(v1) {
+          this.name = v1;
+        }
+        // 类里面的方法，就相当于以前我们在 构造函数的原型对象上面绑定的方法
+        move(param) {
+          console.log("都会走路", param);
+        }
+      }
+      // 像下面这种就是静态属性； 是通过类名调用  Person.sex
+      // 而this上面绑定额属性，就是通过对象实例来调用  p1.name
+      Person.sex = "男";
+      var p1 = new Person("张三");
+      var p2 = new Person("李四");
+      console.log(p1, typeof Person); // "function"
+      console.log(p1.move(), p2.move());
+
+      class Chinese extends Person {
+        constructor() {
+          // 我们在写当前子类的构造函数的时候， 必须要调用一父类的构造函数，辅助我们构造子类的this对象
+          super();
+          this.pifu = "黄皮肤";
+        }
+      }
+      var zgr = new Chinese();
+      console.log(zgr.move("这个是我的子类"));
+
+      // 私有属性，公有有属性，protected
+
+      // 静态属性，动态属性  比较好的一个例子就是jquery
+      // $.extens() $.each()
+      // $('id').parent()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // https://juejin.im/post/58f94c9bb123db411953691b
+      // https://www.jianshu.com/p/dee9f8b14771
+      // https://www.liaoxuefeng.com/wiki/1022910821149312/1023021997355072
+      var arr = []; // js的引擎来说  本质上是 new Array()
+      // function 函数也是对象， 它是由 new Function() 创建出来的； 所以函数也是对象实例
+      console.log(arr); // 每个数组对象都有一个属性 length，所有可以使用arr.length
+      // 对象的原型 等于 创建这个对象的构造函数的 原型对象
+      // 对象的原型就是 arr.__proto__
+      // 创建这个对象的构造函数是 Array； 这个构造函数的原型对象是 Array.prototype
+      console.log(arr.__proto__ === Array.prototype);
+      // 为什么arr能够使用Array原型对象上面的方法和属性呢？就是因为 对象的原型 和 构造函数的原型对象相等
+
+      // 原型 和 原型对象
+      // 1. 所有的对象都由 原型  __proto__
+      // 2. 所有的函数都有 原型对象  prototype
+      // 3. 构造函数
+
+      // 首先arr上面是没有任何属性和方法，就是一空数组， 所以找不到这个方法的时候，就会去arr的构造函数的原型对象上面去找
+      console.log(arr.constructor === Array.prototype.constructor);
+      console.log(arr.constructor === Array);
+
+      // 原型对象也是对象，所以它也有原型 Array.prototype.__proto__
+      // 它的值 就等于创建这个原型对象Array.prototype 的构造函数的原型对象
+      // Array.prototype 它是由js内置的顶级对象Object创建的
+      console.log(Array.prototype.__proto__ === Object.prototype);
+
+      // Object.prototype这个顶级对象的原型对象， 也是一个对象
+      // 只要是对象就有原型
+      console.log(Object.prototype.__proto__);
+
+      // 由上面的可以知道， 我们原型链的查找规则，有原型逐级向上查找，
+      // 我们这个上就是 顺着原型__proto__ ； 知道顶级对象Object.prototype为止；再往上就是null
+
+      // 再就是我们上课学习的 三角关系
+
+      // 对象实例 ldh  是由构造函数创建
+      // 对象实例的原型 ldh.__proto__  等于  创建这个对象的构造函数的原型对象
+      // 对象的构造函数 ldh.constructor 等于 创建ldh这个对象的 构造函数本身 Star
+    </script>
+  </body>
+</html>
