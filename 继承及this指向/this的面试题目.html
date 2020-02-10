@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 关于各个函数内部的this值，再去看上们的 num属性
+      var num = 2;
+      var obj = (function() {
+        var num = 10;
+        num++;
+        this.num += 5;
+        return function() {
+          var num = 20;
+          this.num += 10;
+          console.log(num, this.num);
+        };
+      })();
+      obj();
+      consnole.log(num);
+    </script>
+  </body>
+</html>

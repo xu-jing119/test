@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>继承--借用父类构造函数继承属性， 借用原型对象继承方法</title>
+  </head>
+  <body>
+    <script>
+      // 不适用class，使用传统的方式实现的 继承操作
+      // 借用父类的构造函数 实现属性的继承
+      // 修改构造函数的原型对象  实现对父类原型对象上面方法和属性的继承
+      function Father() {
+        this.house = "大别墅";
+        this.car = "轿车";
+      }
+      Father.prototype.yanjiang = function() {
+        console.log("都很会演讲");
+      };
+
+      function Son(name, sc) {
+        // 借用父类的构造函数实现继承 父类上面的属性
+        // 对于我们这个Son构造函数来说， 此时的this就是s1，
+        // 然后下面这行代码，就相当于给s1对象，添加了两个属性
+        Father.call(this);
+        this.name = name;
+        this.school = sc;
+      }
+
+      // 通过下面的方法， 实现继承父类的原型对象上面的方法
+      // Son.prototype = Father.prototype // 这么写的话，如果修改了子类的原型对象，就会把父类的也会更改，所以这个方法有缺陷
+      // 下面这个是  将Father创建出来的实例对象赋值给我们Son的原型对象，， 因为new Father()创建出来的对象，都可以继承这个构造函数的原型对象上面所有的方法和属性
+      Son.prototype = new Father();
+      Son.prototype.constructor = Son;
+      // 一般我不去修改一个函数的原型对象，如果修改了，一定要把他的构造函数指回来
+
+      // 这个是通过构造函数创建一个对象，
+      var s1 = new Son("张三", "大学");
+      console.log(s1);
+    </script>
+  </body>
+</html>

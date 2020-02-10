@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     function Father(){
+         this.house="大别墅",
+         this.car="小轿车"
+     }
+     Father.prototype.singSong=function(){
+         console.log("我喜欢唱歌")
+     }
+     function Son(){
+        //  利用call方法继承父类属性
+        Father.call(this)
+       this.school="北大",
+     this.name="zhangsan"
+     }
+    //  利用构造函数原型实现继承父类方法
+     Son.prototype=new Father()
+     Son.prototype.constructor = Son;
+var s1 = new Son()
+console.log(s1)
+s1.singSong()
+    </script>
+</body>
+</html>

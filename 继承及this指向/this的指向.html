@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>点击</button>
+    <script>
+      // this指向，普通函数，对象方法，构造函数，事件处理函数，定时器，call/apply/bind，箭头函数
+      // this是一个对象，一般来说是 函数在调用的时候，生成的一个局部变量;
+      // this会随着函数调用的不同 动态的发生改变
+
+      // this的值基本上可以说 谁调用我这个函数，我的this就指向谁
+      // 上面这句话应该加个条件， 如果是构造函数，那么里面的this值就等于构造函数创建出来的实例对象
+      // 还有一种情况，就是箭头函数里面没有this，是借用的父类的作用域下面的this值
+
+      function fn() {
+        console.log("普通函数里面的this: ", this === window);
+      }
+      fn(); // 相当于 window.fn()
+
+      // 对象方法
+      var obj = {
+        name1: "我是亚瑟",
+        getName() {
+          // console.log("这是是对象里面的this: ", this === obj);
+          return function() {
+            // console.log("我是对象里面函数返回的函数，this= ", this);  // this == window
+            console.log(this.name1); // 因为这里面的this是window， 所以就是window.name1
+          };
+        }
+      };
+
+      // 这是时候虽然是obj就调用了这个函数，但是返回值是一个函数，
+      // 返回的函数在全局环境下面执行，所以这个this指向window
+      obj.getName()();
+
+      // 第一种方式，定义一个that保存我们的this值
+      // 第二种方式，利用箭头函数内部没有this值得这种特征，借用父级函数的this值
+      var obj1 = {
+        name1: "我是亚瑟",
+        getName() {
+          // var that = this;
+          // return function() {
+          //   // console.log("我是对象里面函数返回的函数，this= ", this);  // this == window
+          //   console.log(that.name1); // 因为这里面的this是window， 所以就是window.name1
+          // };
+          return () => {
+            console.log(this.name1);
+          };
+        }
+      };
+      obj1.getName()();
+
+      // 构造函数 里面的this 值
+      var that2 = null;
+      function Person() {
+        this.age = 24;
+        that2 = this;
+      }
+      var p1 = new Person();
+      console.log(p1 === that2);
+      // this是一个动态改变的值，第一次that2 它等于 p1
+      // 第二次我们这new 构造函数的时候， that2 又等于了 p2
+      var p2 = new Person();
+      console.log(p2 === that2);
+      console.log(p1 === p2); // 虽然他们的值一样，但是他们的地址不一样
+      console.log(p1, p2);
+
+      // 4. 事件处理函数  里面的this'值
+      // 谁 怎么做 做什么
+      // 事件源   事件类型  事件处理函数
+
+      // 这个button就是我们的DOM对象
+      // 再页面上写一个button按钮元素，就相当于 new HTMLButtonElement()
+      // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLButtonElement
+      var button = document.querySelector("button");
+      // console.dir(button); // 它的底层是由 HTMLButtonElement 对象创建处理的; 它也是继承自父类HTMLElement 这个对象的一个对象； 不管怎么向上，最后的顶级对象一定是 Object
+
+      // 这个dom事件，是一个异步的函数，遵循我们之前说过的 事件循环机制
+      // 事件处理函数，我们并没有看见 调用，就是没有看见小括号
+      // 它的调用使用用户决定的，所以是异步任务，程序不等待在这里，当用户点击这个按钮
+      // js引擎就会自动调用这个回调函数，并且传递一个事件实参给我们的回调函数
+      button.addEventListener("click", function(e) {
+        // 点击一下按钮，就相当于向异步事件队列里面添加了一个 任务， 然后由js的事件循环机制，检测到队列里面有任务，就立马拿出来执行，所以它的表现效果就是点击依次打印一次
+        console.log(e);
+        console.log(this === button);
+      });
+      console.log("11111");
+      // button.onclick = function(){
+      //   //这一种方式绑定时间， 是传统的形式， 上面是比较推荐的新形式
+      // }
+
+      // 箭头函数 里面的this值
+      var fn2 = () => console.log(this);
+      fn2(); // 这个也是window，看不到什么效果，需要借用对象里面的方法来调试
+      var obj5 = {
+        age: 18,
+        getName: () => {
+          console.log(this);
+        }
+      };
+      // 下面这句话原本应该打印的是 obj5， 因为谁调用我这个函数，我的this就指向谁
+      // 但是要将箭头函数排除在外， 箭头函数里面没有this值，它里面的this值是借用的外层作用域的this
+      obj5.getName(); // window
+
+      // 6. call/apply/bind
+      // 这几个方法，是可以动态的改变函数当前this的指向
+      // call和apply  他们既可以调用函数，还可以改变这个函数里面的this值
+      // call接收的参数是逗号分割的参数序列，
+      // apply接收的参数是一个数组
+      var obj6 = {
+        addr: "北京"
+      };
+      function fn6() {
+        console.log(this);
+        console.log(arguments); // 这个是函数调用的时候，动态生成的一个活动参数，储存的是所有的变量值
+      }
+      fn6();
+      fn6.call(obj6, 1, 2, 3, 4);
+      fn6.apply(obj6, [1, 2, 3, 4]);
+
+      console.log("========================");
+      // bind和上面两种不一样，bind不会调用函数，只会返回一个改变了this值的新函数
+      var fn7 = fn6.bind(obj6);
+      fn7(); //这里不是等于 window， 因为这个函数fn7 不是我们创建的，而是有bind函数返回的一个被修改了this的函数
+    </script>
+  </body>
+</html>
