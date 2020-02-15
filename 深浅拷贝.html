@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.js"></script>
+    <script>
+        // 简单数据类型 拷贝的是值    复杂数据类型拷贝的是地址 复杂数据类型地址存在栈里面   值存在堆里面
+        var num = 10
+        var num1 = num
+        num=11
+        console.log(num,num1); //11  10
+
+        var obj = {age:10}
+        var obj1 = obj
+        obj.age=11
+        console.log(obj.age,obj1.age); // 11  11
+        
+        //深拷贝方法一   JSON.stringify()将复杂数据类型对象转换成简单数据类型字符串  JSON.parse()将字符串转换成对象
+        var obj2={name:'zhangsan'}
+        var obj3 =JSON.parse(JSON.stringify(obj2))
+        obj2.name="lisi"
+        console.log(obj2.name,obj3.name); //'lisi'   'zhangsan'
+
+        //深拷贝方法二  引入lodash第三方库
+        // 通过script标签，vue里面通过import导入
+      // lodash里面有一个别人封装好的深拷贝函数，兼容性非常好
+        var obj4={addr:'北京'}
+        var obj5=_.cloneDeep(obj4)
+        obj4.addr='上海'
+        console.log(obj4.addr,obj5.addr);
+
+        // 深拷贝方法三 自己封装
+        function deepClone(source){
+            if(typeof source != 'object'){
+                throw new Error('argument is Error,Please input array or object!')
+            }else{
+                var target = source.constructor.name ==='Array'? []:{}
+                for(var key in source){
+                    if(source.hasOwnProperty(key)){
+                        if(typeof source[key]==='object'){
+                            target[key]=deepClone(source[key])
+                        }else{
+                            target[key]=source[key]
+                        }
+                    }
+                }
+                return target
+            }
+            
+        }
+var obj6={age:10,class:['数学','语文',{c1:'体育',c2:'绘画'}]}
+var obj7=deepClone(obj6)
+     obj7.class[2].c2='音乐'  
+     console.log(obj6,obj7) 
+
+
+        
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./lodash.js"></script>
+    <script>
+      // 深拷贝， 浅拷贝
+      // 普通数据类型  拷贝的是值， 普通数据类型存储在栈里面（值和地址）
+      // 复杂数据类型  拷贝的是 地址 ， 复杂数据类型 地址储存在栈里面， 值得引用储存在堆里面
+      var num1 = 10;
+      var num2 = num1;
+      num1 = 11;
+      console.log(num1, num2);
+
+      var obj1 = { age: 10 };
+      var obj2 = obj1;
+      obj1.age = 11;
+      console.log(obj1.age, obj2.age);
+
+      // 首先第一种最简单的方法
+      // JSON.stringify() 这个方法表示将对象装换为字符串
+      // JSON.parse() 这个方法表示将字符串装换为对象
+      // 这个方法使用条件表示普通的字符串 "{"age":10}"  "[1,2,3,4]"
+      var obj3 = { age: 10 };
+      var obj4 = JSON.parse(JSON.stringify(obj3));
+      obj3.age = 11;
+      console.log(obj3.age, obj4.age);
+
+      // 第二种，引入lodash第三方库
+      // 通过script标签，vue里面通过import导入
+      // lodash里面有一个别人封装好的深拷贝函数，兼容性非常好
+      var obj5 = { age: 10 };
+      var obj6 = _.cloneDeep(obj5);
+      obj5.age = 11;
+      console.log(obj5, obj6);
+
+      // 第三种，不推荐的方式，就是自定义深拷贝函数
+      function deepClone(source) {
+        if (typeof source != "object") {
+          throw new Error("arguments is Error, please input array or object");
+        } else {
+          // 既然是深拷贝，本质上就是创建一个新的地址
+          // var target = source instanceof Array ? [] : {}
+          var target = source.constructor.name === "Array" ? [] : {};
+          for (var key in source) {
+            // hasOwnProperty 判断当前属性 是否是我们本身上们的属性还是原型链上面的属性
+            if (source.hasOwnProperty(key)) {
+              if (typeof source[key] === "object") {
+                // 如果遍历出来的属性又是一个对象，那么我们就是用递归再去走上面流程
+                target[key] = deepClone(source[key]);
+              } else {
+                target[key] = source[key];
+              }
+            }
+          }
+
+          return target;
+        }
+      }
+
+      var obj7 = { age: 10, addr: ["北京", "上海", { c1: "USA", c2: "Kora" }] };
+      var obj8 = deepClone("hello");
+      obj7.age = 11;
+      obj7.addr[2].c2 = "中国";
+      console.log(obj7, obj8);
+    </script>
+  </body>
+</html>
