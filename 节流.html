@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>重复不断点击</button>
+    <script>
+        // 日常游戏点击 轮播图常用 还有一些特殊的搜索框
+    var btn = document.querySelector('button')
+        function ajax(){
+            console.log('模拟的ajax请求--重复点击时打印');
+            
+        }
+        var flag=true
+        function timer(){
+            if(flag){
+                // 设置节流 1秒内如果重复点击多次 只会发送一次请求
+                flag=false
+                setTimeout(function(){
+                    ajax()
+                    flag=true
+                },1000)
+            }
+        }
+        btn.addEventListener('click',function(){
+            timer()
+        })
+
+    </script>
+</body>
+</html>
