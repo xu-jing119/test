@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>节流</title>
+  </head>
+  <body>
+    <button>不断的点击</button>
+    <script>
+      // 给这个按钮绑定一个事件，  谁--怎么做-做什么（我们以后写任何的webapi的程序，大脑里面都是这个套路）
+      var button = document.querySelector("button");
+      function ajax() {
+        console.log("这个是模拟的ajax请求");
+      }
+
+      var flag = true;
+      function throttle() {
+        if (flag) {
+          flag = false;
+          setTimeout(function() {
+            ajax();
+            flag = true;
+          }, 1000);
+        }
+      }
+      button.addEventListener("click", function() {
+        throttle();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>防抖</title>
+  </head>
+  <body>
+    <input type="text" />
+    <script>
+      // 使用场景， 就是一些电商网站上面场景的  搜索框，减轻我们服务器的压力，减少无用的请求
+      // 王泽荣耀在回城的时候， 3-2-1-0  如果中途被人打断了，那么再回城的时候就会从3s开始重新计时
+      // 对于我们前端来说，一般的优化都是往两个方面来说， 一是 减少http请求的个数， 二是减少http请求体积
+      // 谁-- 怎么做--做什么
+      var input = document.querySelector("input");
+      function ajax(argc) {
+        console.log("这个是一个模拟的异步 请求的函数: ", argc);
+      }
+
+      var timer = null;
+      function debounce(param) {
+        // 如果两次输入文字的间隔小于500毫秒，那么就应该清空定时器，不能发请求，这就优化的关键
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          ajax(param);
+        }, 500);
+      }
+
+      input.addEventListener("input", function(e) {
+        debounce(e.target.value);
+      });
+    </script>
+  </body>
+</html>

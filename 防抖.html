@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+    <input type='text' />
+    <script>
+        var ipt = document.querySelector('input')
+        // 模拟发送请求
+        function ajax(data){
+            console.log('文本框输入时打印'+ data);
+            
+        }
+        // 设置一个定时器,当文本框500毫秒内发生改变才发送请求
+        var timer=null
+        function change(param){
+            // 如果两次输入文字的时间间隔小于500毫秒 就清空定时器 不发送请求
+            clearTimeout(timer)
+          timer= setTimeout(function(){
+            ajax(param)
+            },500)
+        }
+        ipt.addEventListener('input',function(e){
+            change(e.target.value)
+        })
+
+    </script>
+</body>
+</html>
