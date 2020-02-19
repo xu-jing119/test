@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <aaa></aaa>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+      Vue.component("aaa", {
+        template: `
+            <div>
+            <div>这是组件aaa</div>
+            <bbb></bbb>
+            </div>
+            `
+      });
+      Vue.component("bbb", {
+        template: `
+            <div>
+            <div>这是组件bbb</div>
+            <ccc></ccc>
+            </div>
+            `
+      });
+      Vue.component("ccc", {
+        data() {
+          return {
+            yy: 6666
+          };
+        },
+        template: `
+            <div>
+            <div>这是组件ccc</div>
+            <p>我是ccc的内容</p>
+            <button @click="getData">点击拿到根组件的内容</button>
+            </div>
+            `,
+            methods:{
+                getData() {
+                    console.log(this);
+                    console.log(this.$parent.$parent.$parent);//一层一层往上找
+                    console.log(this.$parent.$parent.$parent.pd); //可以拿到根组件的内容
+                    console.log(this.$root.pd); //也可以拿到根组件的内容
+                    
+                }
+            }
+      });
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          pd: "传智最接地气的老师~~"
+        },
+        mounted(){
+            console.log(this.$children[0].$children[0].$children[0].yy);//可以拿到ccc组件里面的数据
+            
+        }
+              });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue的其他通信方式</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 4. 使用组件 通过ref="随便取唯一的名字" -->
+      <myheader ref="klxin"></myheader>
+      <myheader ref="c"></myheader>
+    </div>
+  </body>
+</html>
+<script>
+  // 常见的组件间通信方式
+  // 1. 父向子传值
+  // step1 父组件通过属性给子组件传值 step2子组件通过props接受属性
+  // 2. 子向父传值
+  // step1 儿子： this.$emit(和父组件约定好的名字, 值)
+  // step2.1 父亲： v-on:和父组件约定好的名字="函数"
+  // step2.2 父亲：函数的形参接受子传递过来的值
+  // 3. 兄弟通信 借助事件总线
+  // 3.1 var bus = new Vue创建事件总线
+  // 3.2 通过事件总线发送消息
+  // 3.3 通过事件总线接受消息
+  // 4. ref属性 就好比通过id获取页面中的dom
+  // 4.1 给组件添加ref属性(类似于给dom添加id) <myheader ref="klxin"></myheader>
+  // 4.2 通过this.$refs.属性(通过id获取dom)  this.$refs.klxin
+  // Vue.component(组件名, {})
+  Vue.component('myheader', {
+    data() {
+      return {
+        mm: '我是美眉'
+      }
+    },
+    methods: {
+      myheaderHandler() {}
+    },
+    template: `<div>
+      <h2>我是头部组件</h2>
+    </div>`
+  })
+  // vm其实root组件和myheader是什么关系？
+  var vm = new Vue({
+    // el: '#app' // el也可以传递dom元素
+    el: document.querySelector('#app'),
+    mounted() {
+      // console.log(this.$refs, this.$refs.klxin)
+      console.log(this.$refs.klxin.mm)
+      // 我们通过this.$refs.klxin获取到了这个组件
+    }
+  })
+</script>

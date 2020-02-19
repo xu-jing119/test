@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue的其他通信方式</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 5. $parent和$children -->
+      <aa></aa>
+    </div>
+  </body>
+</html>
+<script>
+  // 常见的组件间通信方式
+  // 1. 父向子传值
+  // step1 父组件通过属性给子组件传值 step2子组件通过props接受属性
+  // 2. 子向父传值
+  // step1 儿子： this.$emit(和父组件约定好的名字, 值)
+  // step2.1 父亲： v-on:和父组件约定好的名字="函数"
+  // step2.2 父亲：函数的形参接受子传递过来的值
+  // 3. 兄弟通信 借助事件总线
+  // 3.1 var bus = new Vue创建事件总线
+  // 3.2 通过事件总线发送消息
+  // 3.3 通过事件总线接受消息
+  // 4. ref属性 就好比通过id获取页面中的dom
+  // 4.1 给组件添加ref属性(类似于给dom添加id) <myheader ref="klxin"></myheader>
+  // 4.2 通过this.$refs.属性(通过id获取dom)  this.$refs.klxin
+  // 5. $children和$parent
+  // Vue.component(组件名, {})
+  Vue.component('ddd', {
+    template: `<div>
+      <h2>我是ddd组件</h2>
+      <button @click="getVmData">获取vm上的pd</button>
+    </div>`,
+    methods: {
+      getVmData() {
+        // console.log(this.$parent.$parent.$parent.$parent)
+        // console.log(this.$parent.$parent.$parent.$parent.pd)
+        console.log(this.$root.pd)
+      }
+    }
+  })
+  Vue.component('cc', {
+    data() {
+      return {
+        yy: 6666
+      }
+    },
+    template: `<div>
+      <h2>我是cc组件</h2>
+      <ddd></ddd>
+    </div>`
+  })
+  Vue.component('bb', {
+    template: `<div>
+      <h2>我是bb组件</h2>
+      <cc></cc>
+    </div>`
+  })
+  Vue.component('aa', {
+    template: `<div>
+      <h2>我是aa组件</h2>
+      <bb></bb>
+    </div>`
+  })
+  // vm其实root组件和myheader是什么关系？
+  var vm = new Vue({
+    // el: '#app' // el也可以传递dom元素
+    el: document.querySelector('#app'),
+    data: {
+      pd: '传智最接地气的老师~~'
+    },
+    mounted() {
+      // 获取 cc组件数据值
+      console.log(this.$children) // [a组件]
+      console.log(this.$children[0].$children[0].$children[0]) // c组件
+      console.log(this.$children[0].$children[0].$children[0].yy) // c组件的属性获取
+    }
+  })
+</script>

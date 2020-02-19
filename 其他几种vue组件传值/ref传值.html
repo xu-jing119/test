@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src='./vue.js'></script>
+    <div id="app">
+        <aaa ref="xujing"></aaa>
+    </div>
+    <script>
+        Vue.component('aaa',{
+            data(){
+                return{
+                    msg:'你好啊徐静'
+                }
+            },
+            template:`
+           <p>我是头部组建</p>
+            `
+        })
+        // Vue.component('bbb',{
+        //     template:`
+        //     <ccc></ccc>
+        //     `
+        // })
+        // Vue.component('ccc',{
+        //     template:`
+        //     <p>我是ccc的内容</p>
+        //     `
+        // })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                pd:'这是父组件的内容'
+            },
+            mounted(){
+                console.log(this.$refs.xujing);
+                // 可以拿到子组件的内容
+                console.log(this.$refs.xujing.msg);
+                
+            }
+        })
+
+    </script>
+</body>
+</html>
