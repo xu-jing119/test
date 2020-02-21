@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue中组件封装</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <el-table :data="tableData">
+        <el-table-column prop="date" label="日期" width="180"> </el-table-column>
+        <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
+        <el-table-column prop="address" label="地址"> </el-table-column>
+      </el-table>
+    </div>
+  </body>
+</html>
+<script>
+  // 模仿elementUI
+  // 1. 我们通过插槽实现了组件中内容定制
+  // elementUI中使用
+  // 这里的封装和elementui其实是有区别 极其简单封装
+  Vue.component('el-table-column', {
+    props: ['label'],
+    template: `<td>
+      {{label}}
+    </td>`
+  })
+  Vue.component('el-table', {
+    props: ['data'],
+    template: `<table border>
+      <thead>
+        <tr>
+          <!-- 这里不是一个简单的默认插槽 -->
+          <slot></slot>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in data">
+          <td>{{item.date}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.address}}</td>
+        </tr>
+      </tbody>
+    </table>`
+  })
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }
+      ]
+    }
+  })
+</script>

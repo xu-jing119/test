@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn-success{
+            background-color: pink;
+        }
+      
+
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-button type='success'>点击</el-button>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.component('el-button',{
+            props:{
+                type:{
+                    type:String,
+                    default:'default'
+                }
+            },
+           template:`
+            <button :class="'btn-'+type">
+            <slot></slot>
+            </button>
+           `
+        })
+        const vm = new Vue({
+            el:"#app"
+        })
+
+
+    </script>
+</body>
+</html>
